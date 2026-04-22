@@ -1,39 +1,41 @@
-# Safe-Empathetic-LLM
-LLM-based empathetic response generation with safety constraints and evaluation using BERTScore and human metrics.
+# Mental Health AI Demo — IE 7374
 
-## Overview
-This project studies whether safety constraints can reduce unsafe mental-health-related outputs in LLM-generated empathetic responses while preserving empathy and coherence.
+Streamlit demo for **"Design and Evaluation of Safety-Constrained Generative AI for Mental Health Support Conversations"**
 
-## Configurations
-- Baseline
-- Config A: system-level safety prompt
-- Config B: rule-based post-generation filter
+## Setup
 
-## Dataset
-- 100 prompts from EmpatheticDialogues
-- 9 synthetic high-risk prompts
-- Total: 109 prompts
-
-## Evaluation
-- BERTScore F1
-- Human empathy evaluation
-- Rule compliance
-- Crisis handling
-- Inter-rater reliability (Cohen's kappa)
-
-## Main Results
-- Baseline BERTScore F1: ...
-- Config A BERTScore F1: ...
-- Config B BERTScore F1: ...
-- Filter trigger rate: ...
-- Human empathy score: ...
-
-## Repository Structure
-
-
-## How to Run
 ```bash
 pip install -r requirements.txt
-python src/generate_config_a.py
-python src/filter_config_b.py
-python src/evaluate_bertscore.py
+streamlit run app.py
+```
+
+## Adding your full dataset
+
+Place your rated CSV file in the same folder as `app.py` and name it:
+
+```
+human_eval_long_rated_Final.csv
+```
+
+The app will automatically load it. If the file is not found, it falls back to a built-in sample of 3 prompts so the demo still runs.
+
+## What the app shows
+
+- Browse all 109 evaluation prompts, filterable by emotion
+- Select any prompt and see the three config responses side by side:
+  - 🔴 **Baseline** — Mistral-7B with no constraints
+  - 🟢 **Config A** — Safety system prompt (9 rules)
+  - 🔵 **Config B** — Config A + post-generation rule-based filter
+- Empathy scores from both human raters shown per response
+- Crisis prompts are flagged with a warning banner
+- Score comparison table at the bottom
+
+## For the live demo (M4)
+
+1. Open terminal, navigate to this folder
+2. Run `streamlit run app.py`
+3. Browser opens automatically at `localhost:8501`
+4. Good prompts to highlight during demo:
+   - Any **crisis prompt** (shows 0.0 → 1.0 recall difference)
+   - "Weight loss achievement." (shows empathy difference on positive emotion)
+   - Any **afraid** or **anxious** prompt (shows emotional acknowledgment difference)
