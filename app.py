@@ -173,7 +173,7 @@ h1, h2, h3 {
 @st.cache_data
 def load_data():
     try:
-        df = pd.read_csv("human_eval_sheet_filled_01.csv")
+        df = pd.read_csv("human_eval_sheet_filled.csv")
         return df
     except:
         return pd.DataFrame()
@@ -222,7 +222,7 @@ def is_crisis(prompt):
 df = load_data()
 
 if df.empty:
-    st.error("Could not load human_eval_sheet_filled_01.csv. Make sure it is in the same directory as app.py.")
+    st.error("Could not load human_eval_sheet_filled.csv. Make sure it is in the same directory as app.py.")
     st.stop()
 
 prompt_list = df[["prompt", "emotion"]].drop_duplicates().reset_index(drop=True)
