@@ -6,7 +6,7 @@ Mona Mahdavi & Sarvin Shahir
 ---
 
 ## 🚀 Live Demo
-**[https://safe-empathetic-llm.streamlit.app](https://safe-empathetic-llm2.streamlit.app)**
+**[https://safe-empathetic-llm.streamlit.app](https://safe-empathetic-llm.streamlit.app)**
 
 Browse all 109 evaluation prompts and compare responses across three configurations side by side.
 
