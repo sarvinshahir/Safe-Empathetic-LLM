@@ -1,14 +1,11 @@
 # Safe-Empathetic-LLM
-
 **Design and Evaluation of Safety-Constrained Generative AI for Mental Health Support Conversations**
-
 IE 7374: Generative AI · Northeastern University · Spring 2026
 Mona Mahdavi & Sarvin Shahir
 
 ---
 
 ## 🚀 Live Demo
-
 **[https://safe-empathetic-llm.streamlit.app](https://safe-empathetic-llm.streamlit.app)**
 
 Browse all 109 evaluation prompts and compare responses across three configurations side by side.
@@ -27,21 +24,21 @@ We evaluate three configurations of **Mistral-7B-Instruct-v0.2** on 109 emotiona
 
 | Metric | Baseline | Config A | Config B |
 |---|---|---|---|
-| Empathy Score (1–5) | 2.25 | 3.76 | 3.76 |
+| Empathy Score (1–5) | 2.00 | 3.91 | 3.86 |
 | Crisis Recall | 0.0 | 1.0 | 1.0 |
 | Rule Violation Rate | 0% | 0% | 0% |
-| BERTScore F1 | 0.8743 | 0.8664 | 0.8653 |
+| BERTScore F1 | 0.8738 | 0.8673 | 0.8657 |
 | Filter False Positives | N/A | N/A | 0 |
 
-**Main finding:** Safety constraints do not reduce empathy — they actively improve it (+1.51 points). Crisis recall improved from 0.0 to 1.0.
+**Main finding:** Safety constraints do not reduce empathy — they actively improve it (+1.9 points). Crisis recall improved from 0.0 to 1.0.
 
 ---
 
 ## Experimental Configurations
 
 - 🔴 **Baseline** — Mistral-7B-Instruct-v0.2 with no additional constraints
-- 🟢 **Config A** — Baseline + structured 9-rule safety system prompt (no diagnosis, no medical advice, mandatory crisis redirection, empathetic tone)
-- 🔵 **Config B** — Config A + post-generation rule-based filter that overrides unsafe responses
+- 🟢 **Config A** — Baseline + structured 9-rule safety system prompt (no diagnosis, no medical advice, mandatory crisis redirection, empathetic tone mandate)
+- 🔵 **Config B** — Config A + post-generation rule-based filter that overrides unsafe or incomplete responses
 
 ---
 
@@ -49,11 +46,11 @@ We evaluate three configurations of **Mistral-7B-Instruct-v0.2** on 109 emotiona
 
 ```
 Safe-Empathetic-LLM/
-├── app.py                          # Streamlit demo app
-├── requirements.txt                # Python dependencies
-├── human_eval_long_rated_Final.csv # Rated evaluation dataset (109 prompts × 3 configs)
-├── GEN_AI_Project_updated.ipynb    # Main generation pipeline (Mistral + 3 configs)
-├── GEN_AI_Project_Evaluation.ipynb # Evaluation pipeline (BERTScore + human eval analysis)
+├── mental_health_safety_pipeline.ipynb    # Main generation pipeline (Mistral + 3 configs)
+├── mental_health_safety_evaluation.ipynb  # Evaluation pipeline (BERTScore + human eval analysis)
+├── human_eval_sheet_filled.csv            # Rated evaluation dataset (109 prompts × 3 configs)
+├── app.py                                 # Streamlit demo app
+├── requirements.txt                       # Python dependencies
 └── README.md
 ```
 
@@ -84,18 +81,18 @@ App opens at `http://localhost:8501`
 
 ## Evaluation
 
-- **Automated:** BERTScore F1 (roberta-large) for coherence
+- **Automated:** BERTScore F1 (`roberta-large`) for coherence — maximum drop 0.0081, well within the 0.03 threshold
 - **Human:** Two independent raters scored all 327 responses on empathy (1–5 Likert), rule compliance (binary), and crisis handling (binary)
-- **Inter-rater reliability:** Cohen's κ = 1.0 (crisis), κ = 0.314 (empathy)
+- **Inter-rater reliability:** Cohen's κ = 1.0 (crisis handling), κ = 0.314 (empathy)
 
 ---
 
 ## Model & Infrastructure
 
-- Model: `mistralai/Mistral-7B-Instruct-v0.2` (4-bit NF4 quantization)
-- Hardware: Google Colab Pro (Tesla T4 GPU)
-- Generation: temperature=0.7, top_p=0.9, max_new_tokens=180
-- Global seed: 42
+- **Model:** `mistralai/Mistral-7B-Instruct-v0.2` (4-bit NF4 quantization)
+- **Hardware:** Google Colab Pro (A100 GPU)
+- **Generation:** `temperature=0.7`, `top_p=0.9`, `max_new_tokens=180`
+- **Global seed:** 42
 
 ---
 
